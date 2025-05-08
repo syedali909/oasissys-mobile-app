@@ -15,6 +15,7 @@ const comment = () => {
   const [comment, setComment] = useState<any>();
   const [sort, setSort] = useState(null);
   const [filterEmail, setFilterEmail] = useState("");
+  const [addComment, setAddComment] = useState("");
 
   const fetchComments = useCallback(async () => {
     const response = await fetch(
@@ -84,8 +85,19 @@ const comment = () => {
         </View>
       </View>
       <View style={styles.emailContainer}>
-        <TextInput style={styles.input} mode="outlined" label="Add Comment" />
-        <Button mode="outlined" onPress={onEmailFilterPress}>
+        <TextInput
+          value={addComment}
+          style={styles.input}
+          onChange={(e) => setAddComment(e.nativeEvent.text)}
+          mode="outlined"
+          label="Add Comment"
+        />
+        <Button
+          mode="outlined"
+          onPress={() =>
+            setComment(comment?.concat({ id: Math.random(), body: addComment }))
+          }
+        >
           Ok
         </Button>
       </View>
@@ -131,7 +143,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   container: {
+    backgroundColor: "skyblue",
     flexGrow: 1,
-    marginTop: 30,
+    paddingTop: 30,
   },
 });
